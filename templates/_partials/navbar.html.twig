@@ -1,0 +1,79 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-danger sticky-top pl-3 pr-2">
+    <a class="navbar-brand text-white m-3" href="#"><img with="75px" height="75px" src="{{ asset('images/CGT_DAHER.png') }}" class="rounded p-1" alt=""></img></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+                <a class="nav-link text-white" href="{{path('app_home')}}">Accueil <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="#">Informations</a>
+            </li>
+            <li class="nav-item dropdown" data-controller="dropdown">
+                <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-action="click->dropdown#toggle">
+                    Divisions
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" data-target="dropdown.content">
+                    <a class="dropdown-item" href="#">DAHER SERVICE INDUSTRIE</a>
+                    <a class="dropdown-item" href="#">DAHER BUSINESS SERVICE</a>
+                    <a class="dropdown-item" href="#">DAHER LOGISTIQUE</a>
+                    <a class="dropdown-item" href="#">DAHER INDUSTRIE</a>
+                    <a class="dropdown-item" href="#">DAHER AVIATION</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="#">A Propos</a>
+            </li>
+            <li class="nav-item">
+                <a  class="nav-link text-white"href="#">FAQ</a>
+            </li>
+            <li class="nav-item">
+                <a  class="nav-link text-white"href="#">Contacts</a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right align-items-center my-2 my-lg-0">
+			<li><a class="nav-link bg-danger iconClass" href="#" class="notifications"><i class="fas fa-bell fa-2x p-1"></i><span class="badge badge-warning">1</span><span class="sr-only">unread messages</span></a></li>
+			<li><a class="nav-link bg-danger iconClass" href="#" class="messages"><i class="fas fa-envelope fa-2x p-1"></i><span class="badge badge-warning">10</span></a></li>
+			{% if app.user %}
+                <li class="dropdown">
+                    <a class="nav-link bg-danger" href="#" data-toggle="dropdown" class="dropdown-toggle user-action"><img with="10px" height="10px" src="{{ asset('images/userLogin.png') }}" class="rounded p-1" alt="Avatar">Visiteur</a>
+                    <ul class="dropdown-menu bg-secondary" id="Menu_Profile">
+                        <li><a href="#"><i class="fas fa-user"></i> Profile</a></li>
+                        <li><a href="#"><i class="fas fa-tools"></i> Settings</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    </ul>
+                </li>
+            {% else %}
+                <li class="dropdown">
+                    <a class="nav-link bg-danger" href="#" data-toggle="dropdown" class="dropdown-toggle user-action"><img with="50px" height="50px" src="{{ asset('images/userLogin.svg') }}" class="rounded p-1" alt="Avatar">Visiteur</a>
+                    <ul class="dropdown-menu bg-secondary" id="Menu_Profile">
+                        <li><a href="#"><i class="fas fa-user-cog"></i> Inscription</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                    </ul>
+                </li>
+            {% endif %}
+		</ul>
+    </div>
+</nav>
+<!-- Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">Connexion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Ajoutez ici votre formulaire de connexion Symfony -->
+
+            </div>
+        </div>
+    </div>
+</div>

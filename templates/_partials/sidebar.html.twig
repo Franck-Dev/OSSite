@@ -1,0 +1,76 @@
+<nav id="sidebar">
+    <div class="sidebar-header align-justify-center">
+        <h3>Visiteur</h3>
+        <strong><img with="50px" height="50px" src="{{ asset('images/userLogin.svg') }}" class="rounded p-1" alt=""></img></strong>
+        <button type="button" id="sidebarCollapse" class="btn btn-info bg-secondary">
+            <i class="fas fa-chevron-circle-left"></i>
+        </button>
+    </div>
+    {% if app.user %}
+        <ul class="list-unstyled components text-white m-2">
+            <li>
+                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <i class="fas fa-cogs fa-2x"></i>
+                    <span>Administration</span>
+                </a>
+                <ul class="collapse list-unstyled" id="homeSubmenu">
+                    <li>
+                        <a href="#">Utilisateurs</a>
+                    </li>
+                    <li>
+                        <a href="#">Site</a>
+                    </li>
+                    <li>
+                        <a href="#">Structure</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <i class="fas fa-folder fa-2x"></i>
+                    <span>Dossiers</span>
+                </a>
+                <ul class="collapse list-unstyled" id="homeSubmenu">
+                    <li>
+                        <a href="#">Médias</a>
+                    </li>
+                    <li>
+                        <a href="#">Accords</a>
+                    </li>
+                    <li>
+                        <a href="#">Structure</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <i class="fas fa-phone fa-2x"></i>
+                    <span>Communications</span>
+                </a>
+                <ul class="collapse list-unstyled" id="pageSubmenu">
+                    <li>
+                        <a href="#">Forum</a>
+                    </li>
+                    <li>
+                        <a href="#">Tracts</a>
+                    </li>
+                    <li>
+                        <a href="#">Conventions</a>
+                    </li>
+                    <li>
+                        <a href="#">Sujets</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+        <ul class="list-unstyled CTAs">
+            <li>
+                <a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a>
+            </li>
+            <li>
+                <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
+            </li>
+        </ul>
+    {% endif %}
+</nav>
