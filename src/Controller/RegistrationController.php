@@ -57,7 +57,7 @@ class RegistrationController extends AbstractController
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
             // do anything else you need here, like send an email
-
+            $this->addFlash('success', 'Vous avez reçu un email pour finir de valider votre compte.');
             return $this->redirectToRoute('app_home');
         }
 
@@ -72,12 +72,14 @@ class RegistrationController extends AbstractController
         $id = $request->query->get('id');
 
         if (null === $id) {
+            $this->addFlash('warning', 'Votre id n\'est pas connu. Veuillez contacter votre administrateur');
             return $this->redirectToRoute('app_register');
         }
 
         $user = $userRepository->find($id);
 
         if (null === $user) {
+            $this->addFlash('warning', 'Votre compte a un problème. Veuillez contacter votre administrateur');
             return $this->redirectToRoute('app_register');
         }
 
@@ -93,6 +95,6 @@ class RegistrationController extends AbstractController
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
         $this->addFlash('success', 'Your email address has been verified.');
 
-        return $this->redirectToRoute('app_register');
+        return $this->redirectToRoute('app_home');
     }
 }
