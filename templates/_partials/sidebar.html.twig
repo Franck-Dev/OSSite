@@ -1,7 +1,12 @@
 <nav id="sidebar">
     <div class="sidebar-header align-justify-center">
-        <h3>Visiteur</h3>
-        <strong><img with="50px" height="50px" src="{{ asset('images/userLogin.svg') }}" class="rounded p-1" alt=""></img></strong>
+        {% if app.user %}
+            <h3>{{app.user.nom}}</h3>
+            <strong><img with="50px" height="50px" src="{{ asset('images/userLogin.svg') }}" class="rounded p-1" alt=""></img></strong>
+        {% else %}
+           <h3>Visiteur</h3>
+            <strong><img with="50px" height="50px" src="{{ asset('images/userLogin.svg') }}" class="rounded p-1" alt=""></img></strong> 
+        {% endif %}
         <button type="button" id="sidebarCollapse" class="btn btn-info bg-secondary">
             <i class="fas fa-chevron-circle-left"></i>
         </button>
