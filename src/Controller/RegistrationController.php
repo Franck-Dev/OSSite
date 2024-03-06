@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Mandat;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query\AST\Functions\ConcatFunction;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,6 +47,13 @@ class RegistrationController extends AbstractController
             //Création d'un token user
             $user->setToken(bin2hex(random_bytes(60)));
 
+            //Gestion des rôles
+            $tbMandats=$form->get('mandat')->getData();
+            foreach ($tbMandats as $key => $mandat) {
+                $role=$entityManager->getRepository(Mandat::class)->findOneBy(['id' => $mandat]);
+                $tbRoles[$key]=$role->getRole();
+            }
+            $user->setRoles($tbRoles);
             $entityManager->persist($user);
             $entityManager->flush();
 

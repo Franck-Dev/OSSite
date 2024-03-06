@@ -24,13 +24,14 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('nom')
             ->add('prenom')
-            ->add('date_naissance', DateType::class,[
+            ->add('date_adhesion', DateType::class,[
                 'widget' => 'single_text',
                 'attr' => [
                     'class' => 'js-datepicker',
                 ]
             ])
             ->add('email')
+            ->add('tel')
             ->add('division', EntityType::class, [
                 'class' => Division::class,
                 'choice_label' => 'name',

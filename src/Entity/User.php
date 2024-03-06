@@ -57,7 +57,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $prenom = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
-    private ?\DateTimeImmutable $dateNaissance = null;
+    private ?\DateTimeImmutable $dateAdhesion = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $tel = null;
 
     public function __construct()
     {
@@ -248,14 +251,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getDateNaissance(): ?\DateTimeImmutable
+    public function getDateAdhesion(): ?\DateTimeImmutable
     {
-        return $this->dateNaissance;
+        return $this->dateAdhesion;
     }
 
-    public function setDateNaissance(?\DateTimeImmutable $dateNaissance): static
+    public function setDateAdhesion(?\DateTimeImmutable $dateAdhesion): static
     {
-        $this->dateNaissance = $dateNaissance;
+        $this->dateAdhesion = $dateAdhesion;
+
+        return $this;
+    }
+
+    public function getTel(): ?int
+    {
+        return $this->tel;
+    }
+
+    public function setTel(?int $tel): static
+    {
+        $this->tel = $tel;
 
         return $this;
     }

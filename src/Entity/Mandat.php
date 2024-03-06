@@ -27,6 +27,9 @@ class Mandat
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'mandat')]
     private Collection $users;
 
+    #[ORM\Column(length: 255)]
+    private ?string $role = null;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -96,6 +99,18 @@ class Mandat
         if ($this->users->removeElement($user)) {
             $user->removeMandat($this);
         }
+
+        return $this;
+    }
+
+    public function getRole(): ?string
+    {
+        return $this->role;
+    }
+
+    public function setRole(string $role): static
+    {
+        $this->role = $role;
 
         return $this;
     }
