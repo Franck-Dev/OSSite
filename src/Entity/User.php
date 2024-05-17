@@ -62,10 +62,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?int $tel = null;
 
+    #[ORM\OneToMany(targetEntity: Medias::class, mappedBy: 'createdBy')]
+    private Collection $medias;
+
     public function __construct()
     {
         $this->Site = new ArrayCollection();
         $this->mandat = new ArrayCollection();
+        $this->medias = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -271,6 +275,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setTel(?int $tel): static
     {
         $this->tel = $tel;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Medias>
+     */
+    public function getMedias(): Collection
+    {
+        return $this->medias;
+    }
+
+    public function addMedia(Medias $media): static
+    {
+        if (!$this->medias->contains($media)) {
+            $this->medias->add($media);
+            $media->setCreatedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMedia(Medias $media): static
+    {
+        if ($this->medias->removeElement($media)) {
+            // set the owning side to null (unless already changed)
+            if ($media->getCreatedBy() === $this) {
+                $media->setCreatedBy(null);
+            }
+        }
 
         return $this;
     }

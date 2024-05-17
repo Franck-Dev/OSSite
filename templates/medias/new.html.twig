@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau Media{% endblock %}
+
+{% block body %}
+    <h1>Ajouter un Media</h1>
+
+    {{ include('medias/_form.html.twig') }}
+
+    <a class="btn btn-warning" href="{{ path('app_medias_index') }}">Retour</a>
+
+{% endblock %}

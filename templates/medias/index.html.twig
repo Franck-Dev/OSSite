@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Medias index{% endblock %}
+
+{% block body %}
+    <h1>Medias</h1>
+    {% for key, media in medias %}
+        <h2 class="text m-1">{{key|e}}</h2>
+        {% include "/medias/_caroussel.html.twig" with {'media': media } %}
+    {% endfor %}
+
+    <a class="btn btn-primary" href="{{ path('app_medias_new') }}">Ajouter</a>
+{% endblock %}
