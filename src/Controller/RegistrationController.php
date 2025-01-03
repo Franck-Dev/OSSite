@@ -61,19 +61,21 @@ class RegistrationController extends AbstractController
             // Validation admin pour les rôles autres que adhérents
             if ($role->getRole()!=="ROLE_USER") {
                 // generate a signed url and email it to the admin
+                dump($user);;
                 $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
                     ->from(new Address('postmaster@cgt-daher.com', 'Admin CGT DAHER'))
                     ->To('f.dartois@daher.com')
                     ->subject('Please Confirm your Email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
+                    ->htmlTemplate('registration/confirmation_admin_email.html.twig')
                 );
                 // On crée le mail d'information de l'utilisateur
                 $email = (new TemplatedEmail())
                 ->from(new Address('postmaster@cgt-daher.com', 'Admin CGT DAHER'))
                 ->to($user->getEmail())
                 ->subject('Confirmation d\'inscription')
-                ->htmlTemplate("emails/register.html.twig");
+                ->htmlTemplate("emails/register.html.twig")
+                ->context(['name'=>$user->getNom()]);
 
                 // On envoie le mail
                 $mailer->send($email);
@@ -100,7 +102,7 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/verify/email', name: 'app_verify_email')]
-    public function verifyUserEmail(Request $request, TranslatorInterface $translator, UserRepository $userRepository): Response
+    public function verifyUserEmail(Request $request, TranslatorInterface $translator, UserRepository $userRepository, MailerInterface $mailer): Response
     {
         $id = $request->query->get('id');
 
@@ -127,6 +129,15 @@ class RegistrationController extends AbstractController
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
         $this->addFlash('success', 'Your email address has been verified.');
+
+        //Envoie email de validation
+        $email = (new TemplatedEmail())
+                ->from(new Address('postmaster@cgt-daher.com', 'Admin CGT DAHER'))
+                ->to($user->getEmail())
+                ->subject('Confirmation d\'inscription')
+                ->htmlTemplate("emails/validation_register.html.twig")
+                ->context(['name'=>$user->getNom()]);
+        $mailer->send($email);
 
         return $this->redirectToRoute('app_home');
     }

@@ -1,0 +1,16 @@
+<h1>Bonjour Franck</h1>
+{% set site = user.site|first %}
+{% set mandat = user.mandat|first %}
+<p>
+    M. {{ user.nom|raw }} {{ user.prenom|raw }}, c'est inscrit sur le site.
+    Il est de {{ site.name }}, et a sélectionné un mandat de {{ mandat.name|raw }}.
+</p>
+<p>
+    Si OK , veuillez cliquer sur le lien ci-dessous pour valider son adresse mail, ainsi que son compte: <br><br>
+    <a href="{{ signedUrl|raw }}">Confirmer le compte</a>.
+    Ce lien expire dans {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
+</p>
+
+<p>
+    Merci de votre compréhension. Si besoin, vous pouvez contacter l'administrateur.
+</p>

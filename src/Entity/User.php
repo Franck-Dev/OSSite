@@ -35,13 +35,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\ManyToMany(targetEntity: Site::class, inversedBy: 'users')]
+    #[ORM\ManyToMany(targetEntity: Site::class, inversedBy: 'users', fetch: 'EAGER')]
     private Collection $Site;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
     private ?Division $Division = null;
 
-    #[ORM\ManyToMany(targetEntity: Mandat::class, inversedBy: 'users')]
+    #[ORM\ManyToMany(targetEntity: Mandat::class, inversedBy: 'users', fetch: 'EAGER')]
     private Collection $mandat;
 
     #[ORM\Column(type: 'boolean')]
