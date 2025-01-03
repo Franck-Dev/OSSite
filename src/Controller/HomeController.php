@@ -42,7 +42,9 @@ class HomeController extends AbstractController
         ·         via un formulaire de contact\n
         ·         via son espace personnel\n
         \n
-        Toute utilisation, reproduction, diffusion, commercialisation, modification de toute ou partie du Site,\n sans autorisation de l’Editeur est prohibée et pourra entraînée des actions et poursuites judiciaires\n telles que notamment prévues par le Code de la propriété intellectuelle et le Code civil."],];
+        Toute utilisation, reproduction, diffusion, commercialisation, modification de toute ou partie du Site,\n sans autorisation de l’Editeur est prohibée et pourra entraînée des actions et poursuites judiciaires\n telles que notamment prévues par le Code de la propriété intellectuelle et le Code civil.\n
+        Les responsables du site décline toutes malversations des données par une organisation extérieure."
+        ],];
         
         return $this->render('pages/mentions.html.twig', [
             'page' => $page,
