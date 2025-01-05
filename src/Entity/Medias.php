@@ -49,6 +49,13 @@ class Medias
     #[ORM\Column(length: 255, nullable: true)]
     private ?File $fichier = null;
 
+    #[ORM\ManyToOne(inversedBy: 'medias')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Statut $visibilite = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $perimetre = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -182,6 +189,30 @@ class Medias
     public function setFichier(?string $fichier): static
     {
         $this->fichier = $fichier;
+
+        return $this;
+    }
+
+    public function getVisibilite(): ?Statut
+    {
+        return $this->visibilite;
+    }
+
+    public function setVisibilite(?Statut $visibilite): static
+    {
+        $this->visibilite = $visibilite;
+
+        return $this;
+    }
+
+    public function getPerimetre(): ?string
+    {
+        return $this->perimetre;
+    }
+
+    public function setPerimetre(string $perimetre): static
+    {
+        $this->perimetre = $perimetre;
 
         return $this;
     }

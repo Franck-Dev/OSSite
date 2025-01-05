@@ -20,8 +20,8 @@ class HomeController extends AbstractController
         //Récupération des médias suivant filtres
 
         
-        return $this->render('home/index.html.twig', [
-            'medias' => $mediasRepository->findBy(['isArchived' => false],['createdAt' => 'DESC']),
+        return $this->render('home/index.html.twig', ['medias' => $mediasRepository->findBy(['isArchived' => false,'visibilite' => 1],['createdAt' => 'DESC']),
+            
         ]);
     }
 

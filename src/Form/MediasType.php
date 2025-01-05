@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Medias;
+use App\Entity\Statut;
 use App\Entity\TypeMedias;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -24,12 +25,26 @@ class MediasType extends AbstractType
                 'mapped' => false
             ])
             ->add('couverture', FileType::class,[
-                'mapped' => false
+                'mapped' => false,
+                'required' => false
             ])
             ->add('type', EntityType::class, [
                 'class' => TypeMedias::class,
                 'choice_label' => 'libelle',
             ])
+            ->add('visibilite', EntityType::class, [
+                'class' => Statut::class,
+                'choice_label' => 'libelle',
+            ])
+            ->add('perimetre', ChoiceType::class, [
+                'label'    => 'Périmètre concerné par le média',
+                'mapped' => false,
+                'choices'  => [
+                    'Site' => 'Site',
+                    'Division' => 'Division',
+                    'Convention' => 'Convention',
+                    'Groupe' => 'Groupe'
+                ]])
         ;
     }
 

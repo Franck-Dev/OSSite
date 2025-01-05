@@ -48,11 +48,30 @@ class RegistrationController extends AbstractController
             //Création d'un token user
             $user->setToken(bin2hex(random_bytes(60)));
 
-            //Gestion des rôles
+            //Gestion des rôles et autorisations
             $tbMandats=$form->get('mandat')->getData();
+            $autorisation=1;//Autorisation de base pour tout public du site
             foreach ($tbMandats as $key => $mandat) {
                 $role=$entityManager->getRepository(Mandat::class)->findOneBy(['id' => $mandat]);
                 $tbRoles[$key]=$role->getRole();
+                //Enregistrer que la plus haute autorisation
+                switch ($role->getRole()) {
+                    case 'ROLE_ADHERENT':
+                        $autorisationTEMP=2;
+                        break;
+                    case 'ROLE_ADMIN_LOCAL':
+                        $autorisationTEMP=3;
+                        break;
+                    case 'ROLE_ADMIN_GROUPE':
+                        $autorisationTEMP=4;
+                        break;
+                    default:
+                        # code...
+                        break;
+                }
+                if ($autorisation<$autorisationTEMP) {
+                    $autorisation=$autorisationTEMP;
+                }
             }
             $user->setRoles($tbRoles);
             $entityManager->persist($user);

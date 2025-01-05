@@ -38,7 +38,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Site::class, inversedBy: 'users', fetch: 'EAGER')]
     private Collection $Site;
 
-    #[ORM\ManyToOne(inversedBy: 'users')]
+    #[ORM\ManyToOne(inversedBy: 'users', fetch: 'EAGER')]
     private ?Division $Division = null;
 
     #[ORM\ManyToMany(targetEntity: Mandat::class, inversedBy: 'users', fetch: 'EAGER')]
@@ -64,6 +64,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(targetEntity: Medias::class, mappedBy: 'createdBy')]
     private Collection $medias;
+
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Statut $autorisation = null;
 
     public function __construct()
     {
@@ -305,6 +309,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $media->setCreatedBy(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAutorisation(): ?Statut
+    {
+        return $this->autorisation;
+    }
+
+    public function setAutorisation(?Statut $autorisation): static
+    {
+        $this->autorisation = $autorisation;
 
         return $this;
     }

@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Entity\Medias;
 use App\Form\MediasType;
 use App\Repository\MediasRepository;
+use App\Repository\SiteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,8 +28,8 @@ class MediasController extends AbstractController
     }
 
     #[Route('/new', name: 'app_medias_new', methods: ['GET', 'POST'])]
-    #[IsGranted('ROLE_ADMIN')]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[IsGranted('ROLE_ADMIN_LOCAL')]
+    public function new(Request $request, EntityManagerInterface $entityManager, SiteRepository $siteRepository): Response
     {
         $media = new Medias();
         $form = $this->createForm(MediasType::class, $media);
@@ -43,16 +44,41 @@ class MediasController extends AbstractController
             $file=$form->get('fichier')->getData();
             $filename=$file->getClientOriginalName();
             $file->move($this->getParameter('kernel.project_dir').'/public/medias', $filename);
-            /** @var UploadedFile $imageCover */
-            $imageCover=$form->get('couverture')->getData();
-            $imagename=$imageCover->getClientOriginalName();
-            $imageCover->move($this->getParameter('kernel.project_dir').'/public/medias', $imagename);
-            
+            if ($form->get('couverture')->getData()) {
+                /** @var UploadedFile $imageCover */
+                $imageCover=$form->get('couverture')->getData();
+                $imagename=$imageCover->getClientOriginalName();
+                $imageCover->move($this->getParameter('kernel.project_dir').'/public/medias', $imagename);
+            } else {
+                $imagename="image_default.png";
+            }
+     
             $media->setFichierPath($filename);
             $media->setImage($imagename);
             $media->setCreatedBy($user);
             $media->setIsArchived(false);
-
+            //Suivant périmètre recupérer la donnée qui correspond
+            switch ($form->get('perimetre')->getData()) {
+                case 'Site':
+                    $Site=$siteRepository->findByUserID($user->getId());
+                    $media->setPerimetre($form->get('perimetre')->getData().'/'.$Site[0]->getname());
+                    break;
+                case 'Division':
+                    $Division=$user->getDivision();
+                    $media->setPerimetre($form->get('perimetre')->getData().'/'.$Division->getname());
+                    break;
+                case 'Convention':
+                    $Site=$siteRepository->findByUserID($user->getId());
+                    $convention=$Site[0]->getConvention();
+                    $media->setPerimetre($form->get('perimetre')->getData().'/'.$convention[0]->getName());
+                    break;
+                case 'Groupe':
+                    $Groupe='DAHER';
+                    $media->setPerimetre($form->get('perimetre')->getData().'/'.$Groupe);
+                    break;          
+                default:
+                    break;
+            }
             $DateJour = new \DateTimeImmutable();
             $jour=$DateJour->modify('today');
             $media->setCreatedAt($jour);
@@ -71,6 +97,7 @@ class MediasController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_medias_show', methods: ['GET'])]
+    #[IsGranted('ROLE_ADHERENT')]
     public function show(Medias $media): Response
     {
         return $this->render('medias/show.html.twig', [
@@ -79,7 +106,7 @@ class MediasController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_medias_edit', methods: ['GET', 'POST'])]
-    #[IsGranted('ROLE_ADMIN')]
+    #[IsGranted('ROLE_ADMIN_LOCAL')]
     public function edit(Request $request, Medias $media, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(MediasType::class, $media);
@@ -98,7 +125,7 @@ class MediasController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_medias_delete', methods: ['POST'])]
-    #[IsGranted('ROLE_ADMIN')]
+    #[IsGranted('ROLE_ADMIN_LOCAL')]
     public function delete(Request $request, Medias $media, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$media->getId(), $request->request->get('_token'))) {
