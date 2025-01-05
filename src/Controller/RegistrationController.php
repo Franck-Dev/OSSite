@@ -61,7 +61,6 @@ class RegistrationController extends AbstractController
             // Validation admin pour les rôles autres que adhérents
             if ($role->getRole()!=="ROLE_USER") {
                 // generate a signed url and email it to the admin
-                dump($user);;
                 $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
                     ->from(new Address('postmaster@cgt-daher.com', 'Admin CGT DAHER'))

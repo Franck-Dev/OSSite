@@ -31,7 +31,7 @@
                 <a  class="nav-link text-white"href="#">FAQ</a>
             </li>
             <li class="nav-item">
-                <a  class="nav-link text-white"href="#">Contacts</a>
+                <a  class="nav-link text-white"href="{{path('app_contact')}}">Contacts</a>
             </li>
         </ul>
         <ul class="nav navbar-nav navbar-right align-items-center my-2 my-lg-0">
@@ -39,7 +39,7 @@
 			<li><a class="nav-link bg-danger iconClass" href="#" class="messages"><i class="fas fa-envelope fa-2x p-1"></i><span class="badge badge-warning">10</span></a></li>
 			{% if app.user %}
                 <li class="dropdown">
-                    <a class="nav-link bg-danger" href="#" data-toggle="dropdown" class="dropdown-toggle user-action"><img with="10px" height="10px" src="{{ asset('images/userLogin.png') }}" class="rounded p-1" alt="Avatar">{{app.user.nom}}</a>
+                    <a class="nav-link bg-danger" href="#" data-toggle="dropdown" class="dropdown-toggle user-action"><img with="50px" height="50px" src="{{ asset('images/userLogin.svg') }}" class="rounded p-1" alt="Avatar">{{app.user.nom}}</a>
                     <ul class="dropdown-menu bg-secondary" id="Menu_Profile">
                         <li><a href="#"><i class="fas fa-user"></i> Profile</a></li>
                         <li><a href="#"><i class="fas fa-tools"></i> Settings</a></li>

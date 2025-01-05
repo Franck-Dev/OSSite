@@ -21,11 +21,17 @@
         <div class="wrapper">
             {% include '_partials/sidebar.html.twig' %}
             <div id="content">
-                
-                    <div class="container">
-                        <!-- Contenu de la page -->
-                        {% block body %}{% endblock %}
-                    </div>
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ label }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+                <div class="container">
+                    <!-- Contenu de la page -->
+                    {% block body %}{% endblock %}
+                </div>
             </div>
         </div>
         {% include '_partials/footer.html.twig' %}

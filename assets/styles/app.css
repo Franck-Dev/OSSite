@@ -272,3 +272,25 @@ ul.CTAs a {
     color:#aaa;
     margin-bottom:0;
 }
+datalist {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    writing-mode: horizontal-tb;
+    width: 100%;
+}
+
+option {
+    padding: 0;
+}
+    
+input[type="range"] {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#label_honeyPot {
+    background-color: transparent;
+}
+
