@@ -1,0 +1,22 @@
+<div class="card mb-3" style="max-width: 100%;">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src="{{ asset('medias/' ~ card.image) }}" class="img-fluid rounded-start" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{card.nom}}</h5>
+        <p class="card-text">{{card.preface}}</p>
+        <p class="card-text"><a href="{{path('app_medias_download', {'id':card.id})}}"><i class="fas fa-file"></i> Fichier joint</a></p>
+        
+      </div>
+      <div class="card-footer bg-transparent border-success">
+            {% if card.modifedAt %}
+                <p class="card-text"><small class="text-muted">Modifié le : {{card.modifedAt|date("m/d/Y")}}</small></p>
+            {% else %}
+                <p class="card-text"><small class="text-muted">Créé le : {{card.createdAt|date("d/m/Y")}}</small></p>
+            {% endif %}
+      </div>
+    </div>
+  </div>
+</div>

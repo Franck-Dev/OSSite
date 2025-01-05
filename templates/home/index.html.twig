@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}CGT DAHER{% endblock %}
 
 {% block body %}
 <style>
@@ -8,9 +8,12 @@
     .example-wrapper code { background: white; padding: 2px 6px; }
 </style>
 
-<div class="example-wrapper">
-    <h1>Bienvenue sur le site de la CGT DAHER! ✅</h1>
+<div class="conteiner">
+    <h1>Les dernieres brèves</h1>
     <div {{ stimulus_controller('hello') }}></div>
-    <img with="450px" height="450px" src="{{ asset('images/Site_en_Travaux.jpg') }}" class="rounded p-1" alt=""></img>
+    {% for key, media in medias %}
+        {% include "/medias/_card.html.twig" with {'card': media } %}
+    {% endfor %}
+    {# <img with="450px" height="450px" src="{{ asset('images/Site_en_Travaux.jpg') }}" class="rounded p-1" alt=""></img> #}
 </div>
 {% endblock %}

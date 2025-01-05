@@ -108,4 +108,20 @@ class MediasController extends AbstractController
 
         return $this->redirectToRoute('app_medias_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/download/{id}', name: 'app_medias_download')]
+    #[IsGranted('ROLE_USER')]
+    public function download(int $id, Medias $media, EntityManagerInterface $entityManager): Response
+    {
+        $repoFichier = $entityManager->getRepository(Medias::class); 
+        $media = $repoFichier->find($id);
+        if ($media == null){
+            $this->addFlash(
+               'danger',
+               'Le fichier n\'existe pas'
+            ); }
+        else{
+            return $this->file($_SERVER['DOCUMENT_ROOT'].'medias/'.$media->getFichierPath());
+        }
+    }
 }

@@ -2,9 +2,10 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\MediasRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
@@ -14,10 +15,13 @@ class HomeController extends AbstractController
      * @return Response
      */
     #[Route('/', name: 'app_home')]    
-    public function index(): Response
+    public function index(MediasRepository $mediasRepository): Response
     {
+        //Récupération des médias suivant filtres
+
+        
         return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
+            'medias' => $mediasRepository->findBy(['isArchived' => false],['createdAt' => 'DESC']),
         ]);
     }
 
