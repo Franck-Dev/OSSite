@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste Questions{% endblock %}
+
+{% block body %}
+    <h1>Questions index</h1>
+    
+    <nav class="navbar navbar-light justify-content-between">
+        <a class="btn btn-primary" href="{{ path('app_questions_new') }}">Création</a>
+        <form class="form-inline">
+            <input class="form-control mr-sm-2" type="search" placeholder="Rechercher" aria-label="Search">
+            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </nav>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Questions</th>
+                <th>Date Création</th>
+                <th>Modifié le</th>
+                <th>Reponses</th>
+                <th>Repondu le</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for question in questions %}
+            <tr>
+                <td>{{ question.id }}</td>
+                <td>{{ question.contenu }}</td>
+                <td>{{ question.createdAt ? question.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ question.modifiedAt ? question.modifiedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ question.reponse }}</td>
+                <td>{{ question.answeredAt ? question.answeredAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    {# @TODO faire une condition sur le role de l'utilisateur #}
+                    {% if is_granted("ROLE_ADHERENT") and app.user.nom == question.demandeur.nom %}
+                        <a href="{{ path('app_questions_show', {'id': question.id}) }}" title="Voir"><i class="fa fa-eye"></i></a>
+                        {% if question.isVisible == false %}
+                            <a href="{{ path('app_questions_edit', {'id': question.id}) }}" title="Editer"><i class="fa fa-edit"></i></a>
+                        {% endif %}
+                    {% elseif is_granted("ROLE_ADMIN_LOCAL") %}
+                        <a href="{{ path('app_questions_answer', {'id': question.id}) }}" title="Répondre"><i class="fa fa-comment"></i></a>
+                        {% if question.is_visible == 0 %}
+                            <a href="{{ path('app_questions_visible', {'id': question.id, 'visible': 'unlock'}) }}" title="Rendre visible"><i class="fa fa-lock-open"></i></a>
+                        {% else %}
+                            <a href="{{ path('app_questions_visible', {'id': question.id, 'visible': 'lock'}) }}" title="Rendre invisible"><i class="fa fa-lock"></i></a>
+                        {% endif %}
+                        <a href="{{ path('app_questions_delete', {'id': question.id}) }}" title="Supprimer"><i class="fa fa-trash"></i></a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

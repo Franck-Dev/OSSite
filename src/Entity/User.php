@@ -69,11 +69,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\JoinColumn(nullable: false)]
     private ?Statut $autorisation = null;
 
+    #[ORM\OneToMany(targetEntity: Questions::class, mappedBy: 'demandeur')]
+    private Collection $questions;
+
+    #[ORM\OneToMany(targetEntity: Questions::class, mappedBy: 'repondeur')]
+    private Collection $reponses;
+
     public function __construct()
     {
         $this->Site = new ArrayCollection();
         $this->mandat = new ArrayCollection();
         $this->medias = new ArrayCollection();
+        $this->questions = new ArrayCollection();
+        $this->reponses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -321,6 +329,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setAutorisation(?Statut $autorisation): static
     {
         $this->autorisation = $autorisation;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Questions>
+     */
+    public function getQuestions(): Collection
+    {
+        return $this->questions;
+    }
+
+    public function addQuestion(Questions $question): static
+    {
+        if (!$this->questions->contains($question)) {
+            $this->questions->add($question);
+            $question->setDemandeur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuestion(Questions $question): static
+    {
+        if ($this->questions->removeElement($question)) {
+            // set the owning side to null (unless already changed)
+            if ($question->getDemandeur() === $this) {
+                $question->setDemandeur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Questions>
+     */
+    public function getReponses(): Collection
+    {
+        return $this->reponses;
+    }
+
+    public function addReponse(Questions $reponse): static
+    {
+        if (!$this->reponses->contains($reponse)) {
+            $this->reponses->add($reponse);
+            $reponse->setRepondeur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReponse(Questions $reponse): static
+    {
+        if ($this->reponses->removeElement($reponse)) {
+            // set the owning side to null (unless already changed)
+            if ($reponse->getRepondeur() === $this) {
+                $reponse->setRepondeur(null);
+            }
+        }
 
         return $this;
     }

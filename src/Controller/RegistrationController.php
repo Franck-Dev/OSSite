@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Mandat;
+use App\Entity\Statut;
 use App\Security\EmailVerifier;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
@@ -50,7 +51,7 @@ class RegistrationController extends AbstractController
 
             //Gestion des rôles et autorisations
             $tbMandats=$form->get('mandat')->getData();
-            $autorisation=1;//Autorisation de base pour tout public du site
+            $auto=1;//Autorisation de base pour tout public du site
             foreach ($tbMandats as $key => $mandat) {
                 $role=$entityManager->getRepository(Mandat::class)->findOneBy(['id' => $mandat]);
                 $tbRoles[$key]=$role->getRole();
@@ -69,10 +70,12 @@ class RegistrationController extends AbstractController
                         # code...
                         break;
                 }
-                if ($autorisation<$autorisationTEMP) {
-                    $autorisation=$autorisationTEMP;
+                if ($auto<$autorisationTEMP) {
+                    $auto=$autorisationTEMP;
                 }
+                $autorisation=$entityManager->getRepository(Statut::class)->findOneBy(['id' => $autorisationTEMP]);
             }
+            $user->setAutorisation($autorisation);
             $user->setRoles($tbRoles);
             $entityManager->persist($user);
             $entityManager->flush();
@@ -103,12 +106,11 @@ class RegistrationController extends AbstractController
                 (new TemplatedEmail())
                     ->from(new Address('postmaster@cgt-daher.com', 'Admin CGT DAHER'))
                     ->replyTo($user->getEmail())
+                    ->cc('f.dartois@daher.com')
                     ->subject('Please Confirm your Email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
                 );
             }
-            
-            
             // do anything else you need here, like send an email
             $this->addFlash('success', 'Un email a été généré pour finir de valider votre compte.');
             return $this->redirectToRoute('app_home');

@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Questions{% endblock %}
+
+{% block body %}
+    <h1>Edit Questions</h1>
+
+    {{ include('questions/_form.html.twig', {'button_label': 'Modifier','statut': 'warning'}) }}
+
+    <div class="row d-flex justify-content-between">
+        <div class="col-sm-4">
+            <a class="btn btn-primary" href="{{ path('app_questions_index') }}">Retour <i class="fa fa-backward"></i></a>
+    {# <a href="{{ path('app_questions_index') }}">back to list</a> #}
+        </div>
+        <div class="col-sm-4">
+        {% if question.isVisible == false %}
+            {{ include('questions/_delete_form.html.twig') }}
+        {% endif %}
+        </div>
+    </div>
+{% endblock %}
