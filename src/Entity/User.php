@@ -75,6 +75,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Questions::class, mappedBy: 'repondeur')]
     private Collection $reponses;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $resetToken = null;
+
     public function __construct()
     {
         $this->Site = new ArrayCollection();
@@ -389,6 +392,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $reponse->setRepondeur(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getResetToken(): ?string
+    {
+        return $this->resetToken;
+    }
+
+    public function setResetToken(?string $resetToken): static
+    {
+        $this->resetToken = $resetToken;
 
         return $this;
     }

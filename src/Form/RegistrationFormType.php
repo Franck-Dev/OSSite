@@ -15,7 +15,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 
 class RegistrationFormType extends AbstractType
 {
@@ -30,8 +32,12 @@ class RegistrationFormType extends AbstractType
                     'class' => 'js-datepicker',
                 ]
             ])
-            ->add('email')
-            ->add('tel')
+            ->add('email', EmailType::class,[
+
+            ])
+            ->add('tel', TelType::class,[
+                
+            ])
             ->add('division', EntityType::class, [
                 'class' => Division::class,
                 'choice_label' => 'name',
