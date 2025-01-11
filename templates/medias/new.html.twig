@@ -5,8 +5,8 @@
 {% block body %}
     <h1>Ajouter un Media</h1>
 
-    {{ include('medias/_form.html.twig') }}
+    {{ include('medias/_form.html.twig',{'etat': 'success'}) }}
 
-    <a class="btn btn-warning" href="{{ path('app_medias_index') }}">Retour</a>
+    <a class="btn btn-primary" href="{{ path('app_medias_index') }}">Retour <i class="fa fa-backward"></i></a>
 
 {% endblock %}

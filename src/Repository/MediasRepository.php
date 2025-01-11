@@ -34,20 +34,23 @@ class MediasRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
-
-        foreach ($types as $key => $type) {
-            $tbMedias[$type['libelle']]=$this->createQueryBuilder('m')
-            ->select('m')
-            ->leftJoin ('m.type','t')
-            ->where('t.libelle =:val')
-            ->andWhere('m.isArchived = false')
-            ->setParameter('val', $type)
-            ->orderBy('m.createdAt', 'DESC')
-            ->getQuery()
-            ->getResult()
-        ;
-
+        if ($types) {
+            foreach ($types as $key => $type) {
+                $tbMedias[$type['libelle']]=$this->createQueryBuilder('m')
+                ->select('m')
+                ->leftJoin ('m.type','t')
+                ->where('t.libelle =:val')
+                ->andWhere('m.isArchived = false')
+                ->setParameter('val', $type)
+                ->orderBy('m.createdAt', 'DESC')
+                ->getQuery()
+                ->getResult()
+            ;
+            }
+        } else {
+            $tbMedias=[];
         }
+
         return $tbMedias;
     }
 

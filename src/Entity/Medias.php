@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\MediasRepository;
 use Symfony\Component\HttpFoundation\File\File;
@@ -55,6 +56,18 @@ class Medias
 
     #[ORM\Column(length: 255)]
     private ?string $perimetre = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $contenu = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $vue = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $likes = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $unlikes = null;
 
     public function getId(): ?int
     {
@@ -213,6 +226,54 @@ class Medias
     public function setPerimetre(string $perimetre): static
     {
         $this->perimetre = $perimetre;
+
+        return $this;
+    }
+
+    public function getContenu(): ?string
+    {
+        return $this->contenu;
+    }
+
+    public function setContenu(string $contenu): static
+    {
+        $this->contenu = $contenu;
+
+        return $this;
+    }
+
+    public function getVue(): ?int
+    {
+        return $this->vue;
+    }
+
+    public function setVue(?int $vue): static
+    {
+        $this->vue = $vue;
+
+        return $this;
+    }
+
+    public function getLikes(): ?int
+    {
+        return $this->likes;
+    }
+
+    public function setLikes(?int $likes): static
+    {
+        $this->likes = $likes;
+
+        return $this;
+    }
+
+    public function getUnlikes(): ?int
+    {
+        return $this->unlikes;
+    }
+
+    public function setUnlikes(?int $unlikes): static
+    {
+        $this->unlikes = $unlikes;
 
         return $this;
     }

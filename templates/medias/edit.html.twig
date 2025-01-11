@@ -5,9 +5,14 @@
 {% block body %}
     <h1>Edit Medias</h1>
 
-    {{ include('medias/_form.html.twig', {'button_label': 'Modifier'}) }}
+    {{ include('medias/_form.html.twig', {'button_label': 'Modifier','etat': 'warning'}) }}
 
-    <a class="btn btn-warning" href="{{ path('app_medias_index') }}">Retour</a>
-
-    {{ include('medias/_delete_form.html.twig') }}
+    <div class="row d-flex justify-content-between m-1">
+        <div class="col-sm-4">
+            <a class="btn btn-primary" href="{{ path('app_medias_index') }}">Retour <i class="fa fa-backward"></i></a>
+        </div>
+        <div class="col-sm-4">
+            {{ include('medias/_delete_form.html.twig') }}
+        </div>
+    </div>
 {% endblock %}

@@ -1,5 +1,7 @@
 body {
-    background-color: skyblue;
+    background-color: lightgoldenrodyellow;
+    background-image: radial-gradient(red, yellow, white);
+    background: url(../images/fond.jpg) no-repeat cover center center / cover;
 }
 .nav-side-menu{
     padding-top: 100px;

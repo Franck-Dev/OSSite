@@ -151,4 +151,6 @@ class MediasController extends AbstractController
             return $this->file($_SERVER['DOCUMENT_ROOT'].'medias/'.$media->getFichierPath());
         }
     }
+
+    // @ Création du système de comptage des vues/likes/unlikes
 }

@@ -4,10 +4,11 @@
 
 {% block body %}
     <h1>Medias</h1>
+
+    <a class="btn btn-primary m-1" href="{{ path('app_medias_new') }}">Ajouter</a>
     {% for key, media in medias %}
         <h2 class="text m-1">{{key|e}}</h2>
         {% include "/medias/_caroussel.html.twig" with {'media': media } %}
     {% endfor %}
 
-    <a class="btn btn-primary" href="{{ path('app_medias_new') }}">Ajouter</a>
 {% endblock %}

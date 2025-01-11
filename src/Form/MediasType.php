@@ -21,8 +21,11 @@ class MediasType extends AbstractType
         $builder
             ->add('nom')
             ->add('preface', TextareaType::class)
+            ->add('contenu', TextareaType::class,[
+                'required' => true
+            ])
             ->add('fichier', FileType::class,[
-                'mapped' => false
+                'mapped' => true
             ])
             ->add('couverture', FileType::class,[
                 'mapped' => false,
