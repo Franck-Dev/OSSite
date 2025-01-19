@@ -18,6 +18,32 @@ class MediasType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        //Gestion de l'attribut périmètre
+        if ($options['data']->getPerimetre()==null) {
+            $perimetre['Site']='Site';
+            $reqPer=true;
+        } else {
+            $getPerimetre=explode('/',$options['data']->getPerimetre());
+            $perimetre[$getPerimetre[0]]=$getPerimetre[0];
+            $reqPer=false;
+        }
+        //Gestion de l'attribut fichier obligatoire
+        if ($options['data']->getFichierPath()==null) {
+            $reqFic=true;
+            $visFic=false;
+            $value='';
+        } else {
+            $reqFic=false;
+            $visFic=true;
+            $value=$options['data']->getFichierPath();
+        }
+        //Gestion de l'attribut image
+        if ($options['data']->getImage()==null) {
+            $visImg=false;
+        } else {
+            $visImg=true;
+        }
+        //dd($visImg);
         $builder
             ->add('nom')
             ->add('preface', TextareaType::class)
@@ -25,11 +51,17 @@ class MediasType extends AbstractType
                 'required' => true
             ])
             ->add('fichier', FileType::class,[
-                'mapped' => true
+                'mapped' => true,
+                'required' => $reqFic,
+                'disabled' => $visFic,
+                'attr' => [
+                    'value' => $value
+                ]
             ])
             ->add('couverture', FileType::class,[
                 'mapped' => false,
-                'required' => false
+                'required' => $reqPer,
+                'disabled' => $visImg
             ])
             ->add('type', EntityType::class, [
                 'class' => TypeMedias::class,
@@ -42,6 +74,7 @@ class MediasType extends AbstractType
             ->add('perimetre', ChoiceType::class, [
                 'label'    => 'Périmètre concerné par le média',
                 'mapped' => false,
+                'preferred_choices' => $perimetre,
                 'choices'  => [
                     'Site' => 'Site',
                     'Division' => 'Division',

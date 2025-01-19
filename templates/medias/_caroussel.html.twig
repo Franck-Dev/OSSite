@@ -12,7 +12,7 @@
         {% for key, item in media %}
             {% if key == 0 %}
                 <div class="carousel-item active">
-                <img src="{{ asset('medias/' ~ item.image) }}" class="d-block w-50 mx-auto" alt="...">
+                <a class="img-fluid" href="{{path('app_medias_show', {'id' : item.id})}}"><img src="{{ asset('medias/' ~ item.image) }}" class="d-block w-50 mx-auto" alt="..."></a>
                     <div class="carousel-caption d-none d-md-block text-black bg-white opacity-75">
                         <h5>{{item.nom|e}}</h5>
                         <p>{{item.preface|e}}</p>
@@ -20,7 +20,7 @@
                 </div>
             {% else %}
                 <div class="carousel-item">
-                <img src="{{ asset('medias/' ~ item.image) }}" class="d-block w-50 mx-auto" alt="...">
+                <a class="img-fluid" href="{{path('app_medias_show', {'id' : item.id})}}"><img src="{{ asset('medias/' ~ item.image) }}" class="d-block w-50 mx-auto" alt="..."></a>
                     <div class="carousel-caption d-none d-md-block text-black bg-white opacity-75">
                         <h5>{{item.nom|e}}</h5>
                         <p>{{item.preface|e}}</p>
