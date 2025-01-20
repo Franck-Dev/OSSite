@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau Sujet{% endblock %}
+
+{% block body %}
+    <h1>Création Sujet</h1>
+
+    {{ include('sujets/_form.html.twig',{'etat': 'success'}) }}
+
+    <a class="btn btn-primary" href="{{ path('app_sujets_index') }}">Retour <i class="fa fa-backward"></i></a>
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sujets index{% endblock %}
+
+{% block body %}
+    <h1>Sujets index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>CreatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for sujet in sujets %}
+            <tr>
+                <td>{{ sujet.id }}</td>
+                <td>{{ sujet.title }}</td>
+                <td>{{ sujet.description }}</td>
+                <td>{{ sujet.createdAt ? sujet.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                     {# @TODO faire une condition sur le role de l'utilisateur #}
+                    {% if is_granted("ROLE_ADHERENT") %}
+                        <a href="{{ path('app_sujets_show', {'id': sujet.id}) }}" title="Voir"><i class="fa fa-eye"></i></a>
+                         <a href="{{ path('app_commentaires_new', {'id': sujet.id}) }}" title="Commenter"><i class="fa fa-comment"></i></a>
+                        {% if is_granted("ROLE_ADMIN_LOCAL") %}
+                            <a href="{{ path('app_sujets_edit', {'id': sujet.id}) }}" title="Editer"><i class="fa fa-edit"></i></a>
+                            <a href="{{ path('app_sujets_delete', {'id': sujet.id}) }}" title="Supprimer"><i class="fa fa-trash"></i></a>
+                        {% endif %}                                          
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% if is_granted("ROLE_ADMIN_LOCAL") %}
+        <a href="{{ path('app_sujets_new') }}">Nouveau</a>
+    {% endif %}
+{% endblock %}

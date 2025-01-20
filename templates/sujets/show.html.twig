@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sujets{% endblock %}
+
+{% block body %}
+    <h1>Sujets</h1>
+
+    <div class="row d-flex justify-content-between m-1">
+        <div class="col-sm-4">
+            {# <a href="{{ path('app_questions_index') }}">back to list</a> #}
+            <a class="btn btn-primary" href="{{ path('app_sujets_index') }}">Retour <i class="fa fa-backward"></i></a>
+        </div>
+        <div class="col-sm-4">
+            {# <a href="{{ path('app_questions_edit', {'id': question.id}) }}">edit</a> #}
+            <a class="btn btn-warning" href="{{ path('app_sujets_edit', {'id': sujet.id}) }}">Modifier <i class="fa fa-edit"></i></a>
+        </div>
+        <div class="col-sm-4">
+            {{ include('sujets/_delete_form.html.twig') }}  
+        </div>
+    </div>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ sujet.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ sujet.title }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ sujet.description }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ sujet.createdAt ? sujet.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+    {% for comment in sujet.comments %}
+        {% include "sujets/_comments_card.html.twig" with {'comment': comment } %}
+    {% endfor %}
+{% endblock %}

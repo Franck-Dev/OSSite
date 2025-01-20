@@ -1,0 +1,19 @@
+<div class="card mb-3" style="max-width: 50%;">
+  <div class="row g-0">
+    <div class="col-md-12">
+      <div class="card-body">
+        <p class="card-text">{{comment.body}}</p>        
+      </div>
+      <div class="card-footer bg-transparent border-success">
+        <div class="row d-flex justify-content-between">
+            <div class="col-sm-6">
+              <p class="card-text"><small class="text-muted">Créé le : {{comment.createdAt|date("d/m/Y H:i")}}</small></p>
+            </div>
+            <div class="col-sm-6">
+                <p class="card-text"><small class="text-muted">Rédigé par : {{ comment.createdBy.nom }} {{ comment.createdBy.prenom }}</small></p>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

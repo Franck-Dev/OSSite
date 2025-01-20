@@ -7,6 +7,7 @@ use App\Entity\Medias;
 use App\Form\MediasType;
 use App\Repository\MediasRepository;
 use App\Repository\SiteRepository;
+use App\Service\GestionPerimetre;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,7 +30,8 @@ class MediasController extends AbstractController
 
     #[Route('/new', name: 'app_medias_new', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_ADMIN_LOCAL')]
-    public function new(Request $request, EntityManagerInterface $entityManager, SiteRepository $siteRepository): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,
+     SiteRepository $siteRepository, GestionPerimetre $perimetre): Response
     {
         $media = new Medias();
         $form = $this->createForm(MediasType::class, $media);
@@ -58,7 +60,8 @@ class MediasController extends AbstractController
             $media->setCreatedBy($user);
             $media->setIsArchived(false);
             //Suivant périmètre recupérer la donnée qui correspond
-            $media->setPerimetre($this->setTbPerimetre($form, $user, $siteRepository));
+            //$media->setPerimetre($this->setTbPerimetre($form, $user, $siteRepository));
+            $media->setPerimetre($perimetre->setTbPerimetre($form, $user, $siteRepository));
             $DateJour = new \DateTimeImmutable();
             $jour=$DateJour->modify('today');
             $media->setCreatedAt($jour);

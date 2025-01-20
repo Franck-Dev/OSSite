@@ -78,6 +78,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $resetToken = null;
 
+    #[ORM\OneToMany(targetEntity: Commentaires::class, mappedBy: 'createdBy')]
+    private Collection $commentaires;
+
     public function __construct()
     {
         $this->Site = new ArrayCollection();
@@ -85,6 +88,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->medias = new ArrayCollection();
         $this->questions = new ArrayCollection();
         $this->reponses = new ArrayCollection();
+        $this->commentaires = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -404,6 +408,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setResetToken(?string $resetToken): static
     {
         $this->resetToken = $resetToken;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commentaires>
+     */
+    public function getCommentaires(): Collection
+    {
+        return $this->commentaires;
+    }
+
+    public function addCommentaire(Commentaires $commentaire): static
+    {
+        if (!$this->commentaires->contains($commentaire)) {
+            $this->commentaires->add($commentaire);
+            $commentaire->setCreatedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaire(Commentaires $commentaire): static
+    {
+        if ($this->commentaires->removeElement($commentaire)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaire->getCreatedBy() === $this) {
+                $commentaire->setCreatedBy(null);
+            }
+        }
 
         return $this;
     }
