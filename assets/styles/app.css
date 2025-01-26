@@ -1,7 +1,10 @@
 body {
     background-color: lightgoldenrodyellow;
     background-image: radial-gradient(red, yellow, white);
-    background: url(../images/fond.jpg) no-repeat cover center center / cover;
+    background: url(../images/fond.jpg) no-repeat center center / cover;
+}
+.conteiner h1 {
+    color: white;
 }
 .nav-side-menu{
     padding-top: 100px;
@@ -30,14 +33,14 @@ display: block;
     min-width: 250px;
     max-width: 250px;
     height: auto;
-    background: grey;
+    background: #ffc107;
     color: #fff;
     transition: all 0.3s;
 }
 
 a.article,
 a.download {
-    background: black;
+    background: red;
     text-align: center;
 }
 
@@ -168,10 +171,19 @@ ul.CTAs a {
 
 @media (max-width: 768px) {
     #sidebar {
-        min-width: 80px;
-        max-width: 80px;
+        min-width: 100px;
+        max-width: 100px;
         text-align: center;
-        margin-left: -80px !important;
+        margin-left: 0px !important;
+    }
+
+    #sidebar.sidebar-header h3,
+    #sidebar ul li a span {
+        display: none;
+    }
+
+    #sidebar.sidebar-header strong {
+        display: block;
     }
     .dropdown-toggle::after {
         top: auto;
@@ -184,8 +196,7 @@ ul.CTAs a {
     #sidebar.active {
         margin-left: 0 !important;
     }
-    #sidebar .sidebar-header h3,
-    #sidebar .CTAs {
+    #sidebar .sidebar-header h3 {
         display: none;
     }
     #sidebar .sidebar-header strong {
@@ -193,6 +204,8 @@ ul.CTAs a {
     }
     #sidebar ul li a {
         padding: 20px 10px;
+        text-align: center;
+        font-size: 0.85em;
     }
     #sidebar ul li a span {
         font-size: 0.85em;
