@@ -9,11 +9,11 @@
 </style>
 
 <div class="conteiner">
-    <h1>Les dernieres brèves</h1>
+    <h1>Ils sont là pour vous!!!</h1>
+    <h3>Soyez pas impatient, page en finalisation</h3>
     {# <div {{ stimulus_controller('hello') }}></div> #}
-    {% for key, media in medias %}
-        {% include "/medias/_card.html.twig" with {'card': media } %}
-    {% endfor %}
-    {# <img with="450px" height="450px" src="{{ asset('images/Site_en_Travaux.jpg') }}" class="rounded p-1" alt=""></img> #}
+    <div class="d-flex justify-content-center">
+        <img with="450px" height="450px" src="{{ asset('images/Site_en_Travaux.jpg') }}" class="rounded p-1" alt=""></img>
+    </div>
 </div>
 {% endblock %}

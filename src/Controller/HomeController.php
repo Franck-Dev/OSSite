@@ -55,4 +55,18 @@ class HomeController extends AbstractController
             'chapters' => $chapters,
         ]);
     }
+
+    /**
+     * apropos    Renvoie la page avec les camarades de l'organisation
+     *
+     * @return Response
+     */
+    #[Route('/Organisation', name: 'app_orga')]    
+    public function apropose(MediasRepository $mediasRepository): Response
+    {
+        //Récupération des médias suivant filtres
+
+        
+        return $this->render('home/apropos.html.twig');
+    }
 }
