@@ -3,7 +3,7 @@ body {
     background-image: radial-gradient(red, yellow, white);
     background: url(../images/fond.jpg) no-repeat center center / cover;
 }
-.conteiner h1 {
+h1,h2,h3,.h3,.form-label,label,#markers option{
     color: white;
 }
 .nav-side-menu{

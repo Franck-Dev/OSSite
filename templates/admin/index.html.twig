@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Utilisateurs{% endblock %}
+
+{% block body %}
+    <h1>liste Adhérents</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>Roles</th>
+                <th>IsVerified</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                {# <th>DateAdhesion</th> #}
+                <th>Tel</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
+                <td>{{ user.nom }}</td>
+                <td>{{ user.prenom }}</td>
+                {# <td>{{ user.dateAdhesion ? user.dateAdhesion|date('Y-m-d') : '' }}</td> #}
+                <td>{{ user.tel }}</td>
+                <td>
+                    <a href="{{ path('app_admin_show', {'id': user.id}) }}" title="Voir"><i class="fa fa-eye"></i></a>
+                    <a href="{{ path('app_admin_edit', {'id': user.id}) }}" title="Editer"><i class="fa fa-edit"></i></a>
+                    <a href="{{ path('app_admin_delete', {'id': user.id}) }}" title="Supprimer"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="12">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {# <a href="{{ path('app_admin_new') }}">Create new</a> #}
+{% endblock %}
